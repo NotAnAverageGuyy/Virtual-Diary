@@ -57,8 +57,10 @@
             border-radius: 0 5px 5px 0;
             text-align: justify;
 
-            hyphens: none !important;            /* Word todna band karega */
-            word-break: keep-all;                /* Pura word sath rakhega */
+            hyphens: none !important;
+            /* Word todna band karega */
+            word-break: keep-all;
+            /* Pura word sath rakhega */
             overflow-wrap: normal;
 
             font-size: 15px;
@@ -86,12 +88,12 @@
         .spine {
             position: absolute;
             left: 50%;
-            width: 6px;
+            width: 0;
+            /* Width zero kar di */
             height: 100%;
-            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.4), transparent);
+            background: none;
+            /* Color hata diya */
             z-index: 20;
-            transform: translateX(-50%);
-            pointer-events: none;
         }
 
         .controls {
@@ -115,6 +117,115 @@
             box-shadow: 0 0 15px rgba(93, 64, 55, 0.4);
             transform: translateY(-2px);
         }
+
+
+        body {
+            /* Deep Space Gradient */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Star Animation Background */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            opacity: 0.6;
+            animation: moveStars 100s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveStars {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Book Cover (Galaxy Theme) */
+        .book-wrapper {
+            background: linear-gradient(135px, #2c1a4d 0%, #0f0524 100%);              /* Purple-ish Space */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(89, 45, 150, 0.3), 0 50px 100px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgba(197, 27, 194, 0.211),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Glassy Buttons */
+        button {
+            padding: 12px 35px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            /* Glass effect */
+            transition: 0.4s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: rgba(106, 27, 154, 0.4);
+            /* Nebula Purple */
+            border-color: #9c27b0;
+            box-shadow: 0 0 20px rgba(156, 39, 176, 0.6);
+            transform: translateY(-3px);
+        }
+
+        /* Twinkling Stars Layer */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 10px white;
+            }
+        }
     </style>
 </head>
 
@@ -130,7 +241,7 @@
         <button onclick="nextPage()">Next Page</button>
     </div>
     <script>
-        const textData = "HEY !! i'm Rachittt... Nevermind it doesn't matter whatever my name is. I dont think so anyone is going to find this weirdo virtual diary. Cuz only i've link to access this so makes sense right 😄. Idk what am i gonna write in this i usually feel sometimes and i think maybe i should note down my feelings somehwere so yeah here i'm. Ummmm is there need of any kind of brief about me i don't think so :) I'm rn at the best ages of a human could have according to some bullshit philosophers. Cuz i dont even think there's something best at least 10% of the the word they call &quot;Best&quot;. I feel everything is so shitty and irritating because I can't cope with people around me. Living away from the family the <strong>REAL LOVED ONEs</strong> feels so sad at that random interval of midnight. Talking about my personal experience, I feel like I'm in some kind of trap or prison. I don't get the vibe from anyone among my friends; everyone feels like a 🐍. Moreover, with time we get to know that all the things are just like imaginary myths. This life is yours, this journey is yours, and all the emotional attachments, the workload, and all the stuff that are under a superclass called OVERTHINKING—all these things only you have to handle.";
+        const textData = "HEY !! i'm Rachittt... Nevermind it doesn't matter whatever my name is. I dont think so anyone is going to find this weirdo virtual diary. Cuz only i've link to access this so makes sense right 😄. Idk what am i gonna write in this i usually feel sometimes and i think maybe i should note down my feelings somehwere so yeah here i'm. Ummmm is there need of any kind of brief about me i don't think so :) I'm rn at the best ages of a human could have according to some bullshit philosophers. Cuz i dont even think there's something best at least 10% of the the word they call &quot;Best&quot;. I feel everything is so shitty and irritating because I can't cope with people around me. Living away from the family the <strong>REAL LOVED ONEs</strong> feels so sad at that random interval of midnight. Talking about my personal experience, I feel like I'm in some kind of trap or prison. I don't get the vibe from anyone among my friends; everyone feels like a 🐍. Moreover, with time we get to know that all the things are just like imaginary myths. This life is yours, this journey is yours, and all the emotional attachments, the workload, and all the stuff that are under a superclass called OVERTHINKING—all these things only you have to handle. ";
 
         const book = document.getElementById('book');
         let leaves = [];
@@ -206,6 +317,33 @@
                 leaf.style.zIndex = leaves.length - currentLeaf;
             }
         }
+
+        function createStars() {
+            const container = document.createElement('div');
+            container.className = 'stars-container';
+            document.body.appendChild(container);
+
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Random size, position aur animation duration
+                const size = Math.random() * 3 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+
+                container.appendChild(star);
+            }
+        }
+
+        // Isko paginate ke sath call karein
+        window.onload = function () {
+            paginate();
+            createStars();
+        };
     </script>
 </body>
 
