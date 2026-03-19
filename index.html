@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Virtual Diary | Rachh</title>
@@ -13,14 +14,15 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Poppins', sans-serif; /* Font changed to Poppins */
+            font-family: 'Poppins', sans-serif;
+            /* Font changed to Poppins */
         }
 
         .book-wrapper {
             background: #3e2723;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
             border: 2px solid #2d1b18;
             position: relative;
         }
@@ -49,15 +51,20 @@
             height: 100%;
             background: #f5f5dc;
             backface-visibility: hidden;
-            padding: 35px; 
+            padding: 35px;
             box-sizing: border-box;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.05);
             border-radius: 0 5px 5px 0;
-            text-align: justify; 
-            hyphens: auto;
-            font-size: 15px; 
+            text-align: justify;
+
+            hyphens: none !important;            /* Word todna band karega */
+            word-break: keep-all;                /* Pura word sath rakhega */
+            overflow-wrap: normal;
+
+            font-size: 15px;
             line-height: 1.6;
-            overflow: hidden; /* Extra text hide karne ke liye */
+            overflow: hidden;
+            /* Extra text hide karne ke liye */
         }
 
         .front {
@@ -81,14 +88,16 @@
             left: 50%;
             width: 6px;
             height: 100%;
-            background: linear-gradient(to right, transparent, rgba(0,0,0,0.4), transparent);
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.4), transparent);
             z-index: 20;
             transform: translateX(-50%);
             pointer-events: none;
         }
 
-        .controls { margin-top: 40px; }
-        
+        .controls {
+            margin-top: 40px;
+        }
+
         button {
             padding: 12px 35px;
             cursor: pointer;
@@ -108,94 +117,96 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="book-wrapper">
-    <div class="spine"></div>
-    <div id="book" class="book"></div>
-</div>
+    <div class="book-wrapper">
+        <div class="spine"></div>
+        <div id="book" class="book"></div>
+    </div>
 
-<div class="controls">
-    <button onclick="prevPage()">Previous</button>
-    <button onclick="nextPage()">Next Page</button>
-</div>
-<script>
-    const textData = "HEY !! i'm Ra... Nevermind it doesn't matter whatever my name is. I dont think so anyone is going to find this weirdo virtual diary. Cuz only i've link to access this so makes sense right 😄. Idk what am i gonna write in this i usually feel sometimes and i think maybe i should note down my feelings somehwere so yeah here i'm. Ummmm is there need of any kind of brief about me i don't think so :) I'm rn at the best ages of a human could have according to some bullshit philosophers. Cuz i dont even think there's something best at least 10% of the the word they call &quot;Best&quot;. I feel everything is so shitty and irritating because I can't cope with people around me. Living away from the family the <strong>REAL LOVED ONEs</strong> feels so sad at that random interval of midnight. Talking about my personal experience, I feel like I'm in some kind of trap or prison. I don't get the vibe from anyone among my friends; everyone feels like a 🐍. Moreover, with time we get to know that all the things are just like imaginary myths. This life is yours, this journey is yours, and all the emotional attachments, the workload, and all the stuff that are under a superclass called OVERTHINKING—all these things only you have to handle.";
+    <div class="controls">
+        <button onclick="prevPage()">Previous</button>
+        <button onclick="nextPage()">Next Page</button>
+    </div>
+    <script>
+        const textData = "HEY !! i'm Rachittt... Nevermind it doesn't matter whatever my name is. I dont think so anyone is going to find this weirdo virtual diary. Cuz only i've link to access this so makes sense right 😄. Idk what am i gonna write in this i usually feel sometimes and i think maybe i should note down my feelings somehwere so yeah here i'm. Ummmm is there need of any kind of brief about me i don't think so :) I'm rn at the best ages of a human could have according to some bullshit philosophers. Cuz i dont even think there's something best at least 10% of the the word they call &quot;Best&quot;. I feel everything is so shitty and irritating because I can't cope with people around me. Living away from the family the <strong>REAL LOVED ONEs</strong> feels so sad at that random interval of midnight. Talking about my personal experience, I feel like I'm in some kind of trap or prison. I don't get the vibe from anyone among my friends; everyone feels like a 🐍. Moreover, with time we get to know that all the things are just like imaginary myths. This life is yours, this journey is yours, and all the emotional attachments, the workload, and all the stuff that are under a superclass called OVERTHINKING—all these things only you have to handle.";
 
-    const book = document.getElementById('book');
-    let leaves = [];
-    let currentLeaf = 0;
+        const book = document.getElementById('book');
+        let leaves = [];
+        let currentLeaf = 0;
 
-    function paginate() {
-        // Clear previous content to avoid duplication
-        book.innerHTML = '<div class="spine"></div>';
-        leaves = [];
-        currentLeaf = 0;
+        function paginate() {
+            // Clear previous content to avoid duplication
+            book.innerHTML = '<div class="spine"></div>';
+            leaves = [];
+            currentLeaf = 0;
 
-        let tempDiv = document.createElement('div');
-        // Padding fix: box-sizing ensures padding is inside the 400px
-        tempDiv.style.cssText = "width:400px; padding:35px; line-height:1.6; font-size:15px; font-family:'Poppins', sans-serif; visibility:hidden; position:absolute; box-sizing:border-box; text-align:justify; white-space: normal; overflow-wrap: break-word;";
-        document.body.appendChild(tempDiv);
+            let tempDiv = document.createElement('div');
+            // Padding fix: box-sizing ensures padding is inside the 400px
+            tempDiv.style.cssText = "width:400px; padding:35px; line-height:1.6; font-size:15px; font-family:'Poppins', sans-serif; visibility:hidden; position:absolute; box-sizing:border-box; text-align:justify; hyphens:none; word-break:keep-all;";
+            document.body.appendChild(tempDiv);
 
-        let words = textData.split(' ');
-        let pagesText = [];
-        let currentText = "";
+            let words = textData.split(' ');
+            let pagesText = [];
+            let currentText = "";
 
-        for (let word of words) {
-            let testText = currentText + word + " ";
-            tempDiv.innerHTML = testText;
-            
-            // Height safety margin: 520px total - padding
-            if (tempDiv.scrollHeight > 490) { 
-                pagesText.push(currentText);
-                currentText = word + " ";
-            } else {
-                currentText = testText;
+            for (let word of words) {
+                let testText = currentText + word + " ";
+                tempDiv.innerHTML = testText;
+
+                // Height safety margin: 520px total - padding
+                if (tempDiv.scrollHeight > 490) {
+                    pagesText.push(currentText);
+                    currentText = word + " ";
+                } else {
+                    currentText = testText;
+                }
+            }
+            pagesText.push(currentText);
+            document.body.removeChild(tempDiv);
+
+            for (let i = 0; i < pagesText.length; i += 2) {
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                leaf.style.zIndex = Math.floor(pagesText.length / 2) - Math.floor(i / 2);
+
+                leaf.innerHTML = `
+                <div class="page front">${pagesText[i] || ""}</div>
+                <div class="page back">${pagesText[i + 1] || "..."}</div>
+            `;
+                book.appendChild(leaf);
+                leaves.push(leaf);
             }
         }
-        pagesText.push(currentText);
-        document.body.removeChild(tempDiv);
 
-        for (let i = 0; i < pagesText.length; i += 2) {
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            leaf.style.zIndex = Math.floor(pagesText.length / 2) - Math.floor(i/2);
-            
-            leaf.innerHTML = `
-                <div class="page front">${pagesText[i] || ""}</div>
-                <div class="page back">${pagesText[i+1] || "..."}</div>
-            `;
-            book.appendChild(leaf);
-            leaves.push(leaf);
+        // Wait for fonts to load before paginating to fix first-load issue
+        if (document.fonts) {
+            document.fonts.ready.then(() => {
+                paginate();
+            });
+        } else {
+            window.onload = paginate;
         }
-    }
 
-    // Wait for fonts to load before paginating to fix first-load issue
-    if (document.fonts) {
-        document.fonts.ready.then(() => {
-            paginate();
-        });
-    } else {
-        window.onload = paginate;
-    }
-
-    function nextPage() {
-        if (currentLeaf < leaves.length) {
-            const leaf = leaves[currentLeaf];
-            leaf.classList.add('flipped');
-            leaf.style.zIndex = currentLeaf + 100;
-            currentLeaf++;
+        function nextPage() {
+            if (currentLeaf < leaves.length) {
+                const leaf = leaves[currentLeaf];
+                leaf.classList.add('flipped');
+                leaf.style.zIndex = currentLeaf + 100;
+                currentLeaf++;
+            }
         }
-    }
 
-    function prevPage() {
-        if (currentLeaf > 0) {
-            currentLeaf--;
-            const leaf = leaves[currentLeaf];
-            leaf.classList.remove('flipped');
-            leaf.style.zIndex = leaves.length - currentLeaf;
+        function prevPage() {
+            if (currentLeaf > 0) {
+                currentLeaf--;
+                const leaf = leaves[currentLeaf];
+                leaf.classList.remove('flipped');
+                leaf.style.zIndex = leaves.length - currentLeaf;
+            }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
