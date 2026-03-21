@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #312;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: #ffb7c5;
+        }
+
+        /* Fullscreen Button Styling */
+        .fullscreen-btn {
+            background: transparent;
+            color: #ffb7c5;
+            border: 1px solid #d81b60;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(216, 27, 96, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Password Modal */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(51, 17, 34, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+
+        .password-content {
+            background: #423;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: bounceIn 1s forwards;
+            border: 1px solid #d81b60;
+        }
+
+        .password-content h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #ffb7c5;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d81b60;
+            background: #312;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-input:focus {
+            border-color: #ffb7c5;
+        }
+
+        .submit-btn {
+            background: #d81b60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #ff4d8d;
+            transform: scale(1.05);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #312;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99;
+            transition: opacity 1.2s ease;
+        }
+
+        .welcome-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 48px;
+            color: #ffb7c5;
+            text-align: center;
+            animation: pulse 2s infinite, float 2s ease-in-out infinite;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Main Content */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #d81b60;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffb7c5;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab:hover {
+            background: rgba(216, 27, 96, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .tab.active {
+            background: #d81b60;
+            color: white;
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.4);
+        }
+
+        .content-area {
+            background: #423;
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 183, 197, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #testCanvas {
+            width: 100%;
+            height: 450px;
+            background: #312;
+            border-radius: 15px;
+        }
+
+        .tab-content h2 {
+            margin-bottom: 20px;
+            color: #ffb7c5;
+        }
+
+        .letter {
+            padding: 20px;
+            background: rgba(255, 245, 247, 0.05);
+            border-radius: 15px;
+            border: 2px dashed #d81b60;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .letter h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #ffb7c5;
+        }
+
+        .letter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        .letter.expanded .letter-content {
+            max-height: 900px;
+            padding-top: 10px;
+        }
+
+        .song {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .song:hover {
+            border-color: #d81b60;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .song-icon {
+            font-size: 24px;
+            color: #d81b60;
+        }
+
+        .song-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .song-info p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .note {
+            background: rgba(216, 27, 96, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #d81b60;
+            color: #eee;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-message {
+                font-size: 36px;
+            }
+
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tab {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="password-modal" id="passwordModal">
+        <button class="fullscreen-btn" id="fullscreenBtn">Go Fullscreen ⛶</button>
+        <div class="password-content">
+            <h2>Who's my favorite person !?</h2>
+            <input type="password" class="password-input" id="passwordInput"
+                placeholder="write name as i usually do...">
+            <button class="submit-btn" id="submitPassword">Enter</button>
+        </div>
+    </div>
+
+    <div class="welcome-screen" id="welcomeScreen" style="display:none;">
+        <h1 class="welcome-message">Happy Valentines Day</h1>
+        <h1 class="welcome-message">Little Suprise For Uhh 😘​</h1>
+    </div>
+
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="tabs">
+            <button class="tab active" data-tab="love-letter"><span>❤️</span> Love Letter</button>
+            <button class="tab" data-tab="music"><span>🎵</span> Music</button>
+            <button class="tab" data-tab="notes"><span>📝</span> Notes</button>
+            <button class="tab" data-tab="gallery"><span>🌷</span> Gallery</button>
+            <button class="tab" data-tab="special-surprise"><span>✨</span> Special Surprise</button>
+        </div>
+
+        <div class="content-area">
+            <div class="tab-content active" id="love-letter">
+                <h2>Meri Pyaari Raakhii !!</h2>
+                <div class="letter" id="loveLetter">
+                    <div class="letter-header">
+                        <h3>Ek love letter aapke liye</h3>
+                        <span>👇 Click to open</span>
+                    </div>
+                    <div class="letter-content">
+                        <p>To LOML,</p><br>
+                        <p>Happiest first valentine day to you mera cutu baccha. I cant express how much i love you but
+                            if there could be something to define my love i'm sure that too will be less to express my
+                            love</p><br>
+                        <p>I always had dreamed being with you. I waited so long for you and now the wait is over. Me
+                            tula kadhich swata pasun dur jaau nahi denar tu mala purn complete krtes majh baal.</p>
+                        <p>I always wish and pray to GOD to keep uss together for ever and ever. Mala fkt tu pahije aani
+                            tujhya shi related pratyek gost. Tujhya vina sagda kahi adhura adhura vatte yaar. Me imagine
+                            pn nahi kru shkt tujhya shivay majh kai jhal ast. Tujhya sobt je me feel krto te me jivnat
+                            kadhich kuna brobr feel nai kel.</p>
+                        <p>Tu kadhich mala sodun nako jashil... ik tu janar pn nahi aani that's the whole point of my
+                            happiness. Infact majh happiness ch main reason ch tu aahe not only happiness majh
+                            motivation to work hard to get a peaceful life with you sgda...</p><br>
+                        <p>Mahit aahe jevha me first time bhetlo hoto na tula i never thought ki tu majhi soulmate
+                            asshil. I just had a crush on you then slowly mala affection hou lagla tujhya shi. Affection
+                            Prema madhe convert jhal itka sagda kadhi jhal kadla ch nai yaar. But me hamesha tula ch
+                            choose kel even though starting la aaplya madhe kahi jhal nahi but still me one sided prem
+                            krt gelo. Khup gostin mude hurt pn jhal but ass vichar nahi aala kadhi ki tula sodun dyav
+                            mhnun.</p><br>
+                        <p>Karan itki important aahe tu... khup jast prem krto me tujhya vr...Mhnje itk prem krto ki
+                            yaar kaich sangu nahi bolta yet aahe. But me khup khush aahe aata tujhya aslyane khrch ek
+                            alag feeling yete. Koni tari aahe vatte je majhya sarkhya dumb mula vr jivapar prem krte.
+                            It's just whole diffrent feeling to get loved the same way i do. Mala hamesha tujhya sobt
+                            rhaich hot tula relationship cha tag nahi pahije hota mala te pn challa karan tu imp hoti
+                            bf-gf vagere nahi. But aata sagda ch thik chalu aahe... I love youuuuu so much 😭... Apan
+                            hamesha sobt rahuuu je pn future problems yeil sobt sort kru, sagda sobt share krt jaau, je
+                            majh aahe te sagda tujh aani tujh sgda majh... happy valentine my love me kahi deu tr nahi
+                            shkt tula itkya durun but kahi special tr kruch shkto tujhya sathi 🥹</p><br>
+                        <p>I JUST LOVE YOU SO SOOO SOOOO SOOOOOOO MUCH RAAKHIII 🥹​❤️</p>
+                        <p>Forever yours,</p>
+                        <p>Rachittt</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="music">
+                <h2>Songs that remind me of you</h2>
+                <div class="song">
+                    <div class="song-icon">🎵</div>
+                    <div class="song-info">
+                        <h4>Manjha</h4>
+                        <p>by Vishal Mishra</p>
+                    </div>
+                </div>
+                <div class="song">
+                    <div class="song-icon">🎵</div>
+                    <div class="song-info">
+                        <h4>Jeene Laga Hoon</h4>
+                        <p>by Atif Aslam</p>
+                    </div>
+                </div>
+                <div class="song">
+                    <div class="song-icon">🎵</div>
+                    <div class="song-info">
+                        <h4>Titli</h4>
+                        <p>by Vishal-Shekhar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="notes">
+                <h2>Hamesha Yaad Rakhna</h2>
+                <div class="note">
+                    <p>Me tujh se hadd se jyada pyaar krta hu...​​🫠​❤️​​</p>
+                </div>
+                <div class="note">
+                    <p>Mujhe jealousy bohot hoti hai to make me feel special...🙃​</p>
+                </div>
+                <div class="note">
+                    <p>Aur jitna haqq jataya ja ske jataya kr mujhe acha lagta hai...​🫵​🫶​</p>
+                </div>
+                <div class="note">
+                    <p>Aur me jindagi me sab kuch dekhna chahta hu tere sath...​✨​</p>
+                </div>
+                <div class="note">
+                    <p>Aur jhagda ho jaye to mujhe apna baccha smjh ke maaf kr dena...🥹​</p>
+                </div>
+                <div class="note">
+                    <p>I want you to be always with me...​💋​</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="gallery">
+                <h2>Sweet Memories</h2>
+                <div class="gallery">
+                    <div class="gallery-item"><img src="https://i.postimg.cc/SKhzhYPT/IMG-20250918-171629-521.jpg"
+                            alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/GpCsCTf6/IMG-20251227-000930-332.jpg"
+                            alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/xd2b2NZZ/IMG-20260125-185014.jpg"
+                            alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/s2rZrGLH/IMG-20260213-185808-613.jpg"
+                            alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/Pqj8jv7c/Snapchat-186908911.jpg"
+                            alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/pdHnH57b/Snapchat-1937850914.jpg"
+                            alt="Image"></div>
+
+
+                    <div class="gallery-item"><img src="https://i.postimg.cc/bvhTjjmt/IMG-20260214-182253-870.jpg"alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/50JtfsCD/IMG-20260214-180459.jpg"alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/s2rcRRTZ/IMG-20260214-182304-266.jpg"alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/26Y5C0ZM/IMG_20260113_233138_092.jpg"alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/N0c4wwdT/Screenshot-2026-02-14-18-23-42-98-1c337646f29875672b5a61192b9010f9.jpg"alt="Image"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/3wmRMsk5/Snapchat-1834807924.jpg"alt="Image"></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="special-surprise">
+                <h2>For My Pretty Raakhii</h2>
+                <canvas id="testCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+
+    <script>
+        var canvas;
+        var stage;
+        var container;
+        var captureContainers;
+        var captureIndex;
+        var isInitialized = false;
+
+        function init() {
+            if (isInitialized) return;
+            isInitialized = true;
+
+            canvas = document.getElementById("testCanvas");
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            stage = new createjs.Stage(canvas);
+
+            var w = canvas.width;
+            var h = canvas.height;
+
+            container = new createjs.Container();
+            stage.addChild(container);
+
+            captureContainers = [];
+            captureIndex = 0;
+
+            for (var i = 0; i < 50; i++) {
+                var heart = new createjs.Shape();
+                heart.graphics.beginFill(createjs.Graphics.getHSL(Math.random() * 30 - 45, 100, 50 + Math.random() * 30));
+                heart.graphics.moveTo(0, -12).curveTo(1, -20, 8, -20).curveTo(16, -20, 16, -10).curveTo(16, 0, 0, 12);
+                heart.graphics.curveTo(-16, 0, -16, -10).curveTo(-16, -20, -8, -20).curveTo(-1, -20, 0, -12);
+                heart.y = -100;
+                container.addChild(heart);
+            }
+
+            var text = new createjs.Text("A small valentine wish\nto the most prettiest girl\never in my life...\nI LOVE YOU TILL MY LAST BREATH RAAKHII <3", "bold 20px Montserrat", "#ffb7c5");
+            text.textAlign = "center";
+            text.lineHeight = 30;
+            text.x = w / 2;
+            text.y = h / 2 - text.getMeasuredLineHeight();
+            stage.addChild(text);
+
+            for (i = 0; i < 140; i++) {
+                var captureContainer = new createjs.Container();
+                captureContainer.cache(0, 0, w, h);
+                captureContainers.push(captureContainer);
+            }
+
+            createjs.Ticker.timingMode = createjs.Ticker.RAF;
+            createjs.Ticker.on("tick", tick);
+        }
+
+        function tick(event) {
+            var w = canvas.width;
+            var h = canvas.height;
+            var l = container.numChildren;
+
+            captureIndex = (captureIndex + 1) % captureContainers.length;
+            stage.removeChildAt(0);
+            var captureContainer = captureContainers[captureIndex];
+            stage.addChildAt(captureContainer, 0);
+            captureContainer.addChild(container);
+
+            for (var i = 0; i < l; i++) {
+                var heart = container.getChildAt(i);
+                if (heart.y < -50) {
+                    heart._x = Math.random() * w;
+                    heart.y = h * (1 + Math.random()) + 50;
+                    heart.perX = (1 + Math.random() * 2) * h;
+                    heart.offX = Math.random() * h;
+                    heart.ampX = heart.perX * 0.1 * (0.15 + Math.random());
+                    heart.velY = -Math.random() * 2 - 1;
+                    heart.scale = Math.random() * 1.8 + 1;
+                    heart._rotation = Math.random() * 40 - 20;
+                    heart.alpha = Math.random() * 0.75 + 0.05;
+                    heart.compositeOperation = Math.random() < 0.33 ? "lighter" : "source-over";
+                }
+                var int = (heart.offX + heart.y) / heart.perX * Math.PI * 2;
+                heart.y += heart.velY * heart.scaleX / 2;
+                heart.x = heart._x + Math.cos(int) * heart.ampX;
+                heart.rotation = heart._rotation + Math.sin(int) * 30;
+            }
+
+            captureContainer.updateCache("source-over");
+            stage.update(event);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordModal = document.getElementById('passwordModal');
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const mainContent = document.getElementById('mainContent');
+            const passwordInput = document.getElementById('passwordInput');
+            const submitPassword = document.getElementById('submitPassword');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+            // Fullscreen Logic
+            fullscreenBtn.addEventListener('click', function () {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            submitPassword.addEventListener('click', function () {
+                if (passwordInput.value.toLowerCase() === 'raakhii') {
+                    passwordModal.style.opacity = '0';
+                    setTimeout(() => {
+                        passwordModal.style.display = 'none';
+                        welcomeScreen.style.display = 'flex';
+                        setTimeout(() => {
+                            welcomeScreen.style.opacity = '0';
+                            setTimeout(() => {
+                                welcomeScreen.style.display = 'none';
+                                mainContent.style.display = 'block';
+                            }, 800);
+                        }, 2500);
+                    }, 500);
+                } else {
+                    passwordInput.value = '';
+                    passwordInput.placeholder = 'Try again, my love...';
+                    passwordInput.style.borderColor = '#ff4d4d';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = '#d81b60';
+                        passwordInput.placeholder = 'Our special word...';
+                    }, 1500);
+                }
+            });
+
+            passwordInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') submitPassword.click();
+            });
+
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const targetTab = this.getAttribute('data-tab');
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === targetTab) {
+                            content.classList.add('active');
+                            if (targetTab === 'special-surprise') {
+                                init();
+                            }
+                        }
+                    });
+                });
+            });
+
+            const loveLetter = document.getElementById('loveLetter');
+            loveLetter.addEventListener('click', function () {
+                this.classList.toggle('expanded');
+            });
+        });
+        
+    </script>
+
+</body>
+
+</html>
