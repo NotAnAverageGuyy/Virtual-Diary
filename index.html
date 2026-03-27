@@ -15,7 +15,6 @@
             min-height: 100vh;
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            /* Font changed to Poppins */
         }
 
         .book-wrapper {
@@ -226,6 +225,41 @@
         .book-wrapper {
             max-width: 100vw;
         }
+
+        /*pop msg ki styling*/
+        #galaxyNoticeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #050816, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.galaxyNoticeBox {
+  background: rgba(5,10,40,0.85);
+  border: 1px solid #6aa9ff;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 25px #6aa9ff;
+  max-width: 320px;
+}
+
+.galaxyNoticeBox button {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border: none;
+  background: #6aa9ff;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+}
     </style>
 </head>
 
@@ -240,6 +274,16 @@
         <button onclick="prevPage()">Previous</button>
         <button onclick="nextPage()">Next Page</button>
     </div>
+
+    <div id="galaxyNoticeOverlay">
+  <div class="galaxyNoticeBox">
+    <h2>A L E R T</h2>
+    <p>For best experience, open in Laptop/PC</p>
+    <button onclick="hideGalaxyNotice()">Enter</button>
+  </div>
+</div>
+
+
     <script>
         const textData = "HEY !! i'm Rachittt... Nevermind it doesn't matter whatever my name is. I dont think so anyone is going to find this weirdo virtual diary. Cuz only i've link to access this so makes sense right 😄. Idk what am i gonna write in this i usually feel sometimes and i think maybe i should note down my feelings somehwere so yeah here i'm. Ummmm is there need of any kind of brief about me i don't think so :) I'm rn at the best ages of a human could have according to some bullshit philosophers. Cuz i dont even think there's something best at least 10% of the the word they call &quot;Best&quot;. I feel everything is so shitty and irritating because I can't cope with people around me. Living away from the family the <strong>REAL LOVED ONEs</strong> feels so sad at that random interval of midnight. Talking about my personal experience, I feel like I'm in some kind of trap or prison. I don't get the vibe from anyone among my friends; everyone feels like a 🐍. Moreover, with time we get to know that all the things are just like imaginary myths. This life is yours, this journey is yours, and all the emotional attachments, the workload, and all the stuff that are under a superclass called OVERTHINKING—all these things only you have to handle. We've grown watching movies and web series, which puts a thought in our minds that one day someone will come into his/her life making things easy, whom you'll share every part of your life with. We expect our partner will stay with us in our bad times and in good times. But this isn't the true story; the fact is that we're digging a graveyard of our emotions by expecting anything from others. These internet, web series things have made us believe that there's someone who is a soulmate and blah blah... But by the time when we came to realize these things, it was too late because till then we were caught in a prison of being lonely. Okayy enough of this english FvCK this sh*t. Agar me meri baat kru to i'm not that kinda guy jiske college me bohot dost honge ekdum cool, thug type naaahhh i'm very different kabhi kabhi lagta hai me bakiyo se sachme ajeeb hu pata nai but ab nature hi aisa ho gaya hai mera ki i don't like crowd, many ppls in life, connecting with everyone... I know sounds stupid but yeah aisa hi hu me; me harr kisi chij me khushiyan nai dhundh pata mera connection bohot jyada limited hai mere around bass meri family <3 aur 1-2 dost hai; ab to vo dost bhi dogle lagte hai fr aur time ke sath sath i also felt that i found my soulmate at higher school i found a girl. She was very different use pehli baar dekh ke aisi feeling aayi jo kisi ladki ko dekh ke nai aayi 🤌. Usne mask lagaya tha cute pink specs long silky hair pretty eyes 🫠. I thought OMG rachit r u in love. But then yeah, I suddenly remembered I look like wet concrete. Aur its normal to think ki mujhe itni pyari lagne wali ladki baki ladko ko kyu nai lagegi. But i got her 🥹. But the journey in between this phase—I can't tell you how much I've broken myself. I've lost myself. I've got plenty of insecurities, and yes, now I've got a scary feeling that I'll end up losing that person too. Dil humare bhi toote hai ek baar nai baar baar tute. But I praised her alot, believing she completes me. Now when I look at myself, I'm blank. I don't know what I'm going to do in life. Will I ever become her life partner? Will she stay with me forever, unlike the past when I got cheated? Will this relationship work? Can I make things better? Should I become selfish? Can I make my family happy and make them proud? I have a lot of questions like this because I'm an overthinker.";
 
@@ -347,6 +391,11 @@
             paginate();
             createStars();
         };
+
+        //pop alert msg 
+        function hideGalaxyNotice() {
+  document.getElementById("galaxyNoticeOverlay").style.display = "none";
+}
     </script>
 </body>
 
